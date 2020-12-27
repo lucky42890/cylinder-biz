@@ -1,12 +1,15 @@
 import React from "react";
 
+/* Pages */
+import Cylinder from "./pages/Cylinder";
+
 /* Import styles */
 import "./styles/index.scss";
 
 const App = () => {
   return (
-    <div className="cylinder-app">
-      test
+    <div className="app">
+      <Cylinder />
     </div>
   );
 }

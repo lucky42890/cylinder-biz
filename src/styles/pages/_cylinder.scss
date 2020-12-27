@@ -1,3 +1,15 @@
-.cylinder-app {
-  background: red;
+.cylinder {
+  &-setting {
+    position: absolute;
+    top: 24px;
+    left: 24px;
+    border-radius: 12px;
+    background: white;
+    padding: 16px;
+
+    input {
+      width: 100%;
+      box-sizing: border-box;
+    }
+  }
 }
