@@ -58,25 +58,32 @@ const Cylinder = () => {
     const idealLength = Math.ceil(Math.sqrt(numberOfCylinders));
     let zFloor = 0;
 
-    for (let i = 0; i < numberOfCylinders; i++) {
+    // Draw cylinder with random
+    let currentCylinderNum = 0;
+    for (let i = 0; i < idealLength * idealLength; i++) {
       if (i % idealLength === 0 && i !== 0) {
         zFloor++;
       }
 
+      if (Math.random() < 0.4 && (numberOfCylinders - currentCylinderNum) < (idealLength * idealLength - i - 1)) {
+        continue;
+      }
+
+      currentCylinderNum++;
       const height = Math.random() * 200 - 100;
       const geometry = new THREE.CylinderBufferGeometry( 10, 10, Math.abs(height), 32, 1, false );
       const material = new THREE.MeshPhongMaterial( { color: getRandomColor(), flatShading: true } );
       const mesh = new THREE.Mesh( geometry, material );
-      mesh.position.x = (i % idealLength) * 30 + Math.random() * 15;
+      mesh.position.x = (i % idealLength) * 30 + Math.random() * 20 - idealLength * 15;
       mesh.position.y = height / 2;
-      mesh.position.z = zFloor * 30;
+      mesh.position.z = zFloor * 30 - idealLength * 15;
       mesh.updateMatrix();
       mesh.matrixAutoUpdate = false;
       scene.add( mesh );
     }
 
     // Circle round
-    const radius = idealLength * 15 * Math.sqrt(2);
+    const radius = idealLength * 15 * Math.sqrt(2) + 16;
     const box = new THREE.Mesh(new THREE.CylinderGeometry(radius, radius, 20, 32, 1));
     const sphere = new THREE.Mesh(new THREE.CylinderGeometry(radius - 2, radius - 2, 20, 32, 1));
 
@@ -85,8 +92,6 @@ const Cylinder = () => {
 
     const sub = bBSP.subtract(sBSP);
     const roundMesh = sub.toMesh();
-    roundMesh.position.x = idealLength * 15;
-    roundMesh.position.z = idealLength * 15;
     roundMesh.material = new THREE.MeshPhongMaterial({ color: getRoundColor(), flatShading: true });
     scene.add(roundMesh);
 
@@ -129,9 +134,6 @@ const Cylinder = () => {
     const value = roundColorNum + 100;
     const redVal = parseInt(255 - (255 / 200) * value);
     const greenVal = parseInt((255 / 200) * value);
-    console.log(value);
-    console.log(redVal);
-    console.log(greenVal);
     return color + redVal.toString(16) + greenVal.toString(16) + '00';
   }
 
