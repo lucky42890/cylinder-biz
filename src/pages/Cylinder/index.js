@@ -69,12 +69,16 @@ const Cylinder = () => {
         continue;
       }
 
+      if (currentCylinderNum === numberOfCylinders) {
+        break;
+      }
+
       currentCylinderNum++;
       const height = Math.random() * 200 - 100;
       const geometry = new THREE.CylinderBufferGeometry( 10, 10, Math.abs(height), 32, 1, false );
       const material = new THREE.MeshPhongMaterial( { color: getRandomColor(), flatShading: true } );
       const mesh = new THREE.Mesh( geometry, material );
-      mesh.position.x = (i % idealLength) * 30 + Math.random() * 20 - idealLength * 15;
+      mesh.position.x = (i % idealLength) * 30 + Math.random() * 15 - idealLength * 15;
       mesh.position.y = height / 2;
       mesh.position.z = zFloor * 30 - idealLength * 15;
       mesh.updateMatrix();
@@ -171,7 +175,7 @@ const Cylinder = () => {
         <p>Number of Cylinders</p>
         <input
           type="number"
-          min="-100"
+          min="1"
           max="100"
           value={numberOfCylinders}
           onChange={handleCylinderNumChange}
